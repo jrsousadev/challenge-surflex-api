@@ -20,7 +20,7 @@ export class LocationRepository {
         data,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -32,19 +32,19 @@ export class LocationRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
   async delete({ id }: IDeleteLocation) {
     try {
-      return await prismaClient.location.delete({
+      await prismaClient.location.delete({
         where: {
           id,
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }

@@ -2,11 +2,6 @@ import { CharacterRepository } from "../../../repositories/CharacterRepository";
 import { LocationRepository } from "../../../repositories/LocationRepository";
 import { OriginRepository } from "../../../repositories/OriginRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
-
-const characterRepository = new CharacterRepository();
-const originRepository = new OriginRepository();
-const locationRepository = new LocationRepository();
-
 interface IRequest {
   id: number;
   name: string;
@@ -27,35 +22,39 @@ interface IRequest {
     url: string;
   };
 }
-
 export class CreateCharacterService {
+  constructor(
+    private characterRepository: CharacterRepository,
+    private originRepository: OriginRepository,
+    private locationRepository: LocationRepository
+  ) {}
+
   async execute(data: IRequest) {
     try {
-      const characterExist = await characterRepository.getOne({
+      const characterExist = await this.characterRepository.getOne({
         id: Number(data.id),
       });
 
-      const origin = await originRepository.create({
+      const origin = await this.originRepository.create({
         name: data.origin.name ?? "unknown",
         url: data.origin.url ?? "",
       });
 
-      const location = await locationRepository.create({
+      const location = await this.locationRepository.create({
         name: data.location.name ?? "unknown",
         url: data.location.url ?? "",
       });
 
-      console.log(location);
-
       if (characterExist) throw new CustomError("Character is exist", 400);
 
-      await characterRepository.create({
-        ...data,
-        originId: origin?.id,
-        locationId: location?.id,
-      });
+      if (location && origin)
+        await this.characterRepository.create({
+          ...data,
+          originId: origin.id,
+          locationId: location.id,
+        });
 
-      const character = await characterRepository.getOne({
+      const character = await this.characterRepository.getOne({
         id: Number(data.id),
       });
 

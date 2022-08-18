@@ -62,7 +62,7 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -78,7 +78,7 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -100,19 +100,19 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
   async delete({ id }: IDeleteCharacter) {
     try {
-      return await prismaClient.character.delete({
+      await prismaClient.character.delete({
         where: {
           id,
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }

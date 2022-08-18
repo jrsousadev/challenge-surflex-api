@@ -20,7 +20,7 @@ export class OriginRepository {
         data,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -32,19 +32,19 @@ export class OriginRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
   async delete({ id }: IDeleteOrigin) {
     try {
-      return await prismaClient.origin.delete({
+      await prismaClient.origin.delete({
         where: {
           id,
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }

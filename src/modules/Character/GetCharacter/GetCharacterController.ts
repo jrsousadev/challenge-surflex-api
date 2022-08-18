@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { CharacterRepository } from "../../../repositories/CharacterRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
 import { GetCharacterService } from "./GetCharacterService";
 
@@ -7,7 +8,8 @@ export class GetCharacterController {
     const { id } = request.params;
 
     try {
-      const getCharacterService = new GetCharacterService();
+      const characterRepository = new CharacterRepository();
+      const getCharacterService = new GetCharacterService(characterRepository);
       const character = await getCharacterService.execute({
         id: Number(id),
       });

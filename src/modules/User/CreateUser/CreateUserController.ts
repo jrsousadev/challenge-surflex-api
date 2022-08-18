@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { UserRepository } from "../../../repositories/UserRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
 import { CreateUserService } from "./CreateUserService";
 
@@ -7,7 +8,8 @@ export class CreateUserController {
     const { name, password } = request.body;
 
     try {
-      const createUserService = new CreateUserService();
+      const userRepository = new UserRepository();
+      const createUserService = new CreateUserService(userRepository);
       const user = await createUserService.execute({
         name,
         password,

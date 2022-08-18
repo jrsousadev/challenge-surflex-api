@@ -17,7 +17,7 @@ export class UserRepository {
         data,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -36,8 +36,8 @@ export class UserRepository {
           name,
         },
       });
-    } catch (error) {
-      console.log(err);
+    } catch (err) {
+      throw err;
     }
   }
 }

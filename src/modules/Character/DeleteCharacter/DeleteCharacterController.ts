@@ -1,4 +1,7 @@
 import { Request, Response } from "express";
+import { CharacterRepository } from "../../../repositories/CharacterRepository";
+import { LocationRepository } from "../../../repositories/LocationRepository";
+import { OriginRepository } from "../../../repositories/OriginRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
 import { DeleteCharacterService } from "./DeleteCharacterService";
 
@@ -7,7 +10,14 @@ export class DeleteCharacterController {
     const { id } = request.params;
 
     try {
-      const deleteCharacterService = new DeleteCharacterService();
+      const characterRepository = new CharacterRepository();
+      const originRepository = new OriginRepository();
+      const locationRepository = new LocationRepository();
+      const deleteCharacterService = new DeleteCharacterService(
+        characterRepository,
+        originRepository,
+        locationRepository
+      );
       const character = await deleteCharacterService.execute({
         id: Number(id),
       });

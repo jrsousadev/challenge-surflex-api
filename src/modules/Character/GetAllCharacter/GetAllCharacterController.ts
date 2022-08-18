@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { CharacterRepository } from "../../../repositories/CharacterRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
 import { GetAllCharacterService } from "./GetAllCharacterService";
 
@@ -8,7 +9,10 @@ export class GetAllCharacterController {
     const { name, species } = request.query;
 
     try {
-      const getAllCharacterService = new GetAllCharacterService();
+      const characterRepository = new CharacterRepository();
+      const getAllCharacterService = new GetAllCharacterService(
+        characterRepository
+      );
       const character = await getAllCharacterService.execute({
         id,
         name: String(name),
