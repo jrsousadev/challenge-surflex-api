@@ -2,11 +2,6 @@ import { CharacterRepositoryInMemory } from "../../../../repositories/in-memory/
 import { LocationRepositoryInMemory } from "../../../../repositories/in-memory/LocationRepositoryInMemory";
 import { OriginRepositoryInMemory } from "../../../../repositories/in-memory/OriginRepositoryInMemory";
 import { CustomError } from "../../../../shared/errors/CustomError";
-
-const characterRepositoryInMemory = new CharacterRepositoryInMemory();
-const originRepositoryInMemory = new OriginRepositoryInMemory();
-const locationRepositoryInMemory = new LocationRepositoryInMemory();
-
 interface IRequest {
   id: number;
   name: string;
@@ -29,31 +24,37 @@ interface IRequest {
 }
 
 export class CreateCharacterServiceInMemory {
+  constructor(
+    private characterRepository: CharacterRepositoryInMemory,
+    private originRepository: OriginRepositoryInMemory,
+    private locationRepository: LocationRepositoryInMemory
+  ) {}
+
   async execute(data: IRequest) {
     try {
-      const characterExist = await characterRepositoryInMemory.getOne({
+      const characterExist = await this.characterRepository.getOne({
         id: Number(data.id),
       });
 
-      const origin = await originRepositoryInMemory.create({
+      const origin = await this.originRepository.create({
         name: data.origin.name ?? "unknown",
         url: data.origin.url ?? "",
       });
 
-      const location = await locationRepositoryInMemory.create({
+      const location = await this.locationRepository.create({
         name: data.location.name ?? "unknown",
         url: data.location.url ?? "",
       });
 
       if (characterExist) throw new CustomError("Character is exist", 400);
 
-      await characterRepositoryInMemory.create({
+      await this.characterRepository.create({
         ...data,
         originId: origin?.id,
         locationId: location?.id,
       });
 
-      const character = await characterRepositoryInMemory.getOne({
+      const character = await this.characterRepository.getOne({
         id: Number(data.id),
       });
 

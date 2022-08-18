@@ -1,11 +1,24 @@
 import { uuid } from "uuidv4";
+import { CharacterRepositoryInMemory } from "../../../repositories/in-memory/CharacterRepositoryInMemory";
+import { LocationRepositoryInMemory } from "../../../repositories/in-memory/LocationRepositoryInMemory";
+import { OriginRepositoryInMemory } from "../../../repositories/in-memory/OriginRepositoryInMemory";
 import { CreateCharacterServiceInMemory } from "./in-memory/CreateCharacterServiceInMemory";
 
 let createCharacterServiceInMemory: CreateCharacterServiceInMemory;
+let characterRepository: CharacterRepositoryInMemory;
+let originRepository: OriginRepositoryInMemory;
+let locationRepository: LocationRepositoryInMemory;
 
 describe("Service Create Character", () => {
   beforeEach(() => {
-    createCharacterServiceInMemory = new CreateCharacterServiceInMemory();
+    characterRepository = new CharacterRepositoryInMemory();
+    originRepository = new OriginRepositoryInMemory();
+    locationRepository = new LocationRepositoryInMemory();
+    createCharacterServiceInMemory = new CreateCharacterServiceInMemory(
+      characterRepository,
+      originRepository,
+      locationRepository
+    );
   });
 
   it("Deve ser capaz de criar um personagem com sucesso!", async () => {

@@ -12,6 +12,8 @@ export class DeleteCharacterController {
         id: Number(id),
       });
 
+      console.log(character);
+
       return response.status(200).json(character);
     } catch (err) {
       if (err instanceof CustomError) {

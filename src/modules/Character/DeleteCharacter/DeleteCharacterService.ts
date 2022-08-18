@@ -15,12 +15,12 @@ export class DeleteCharacterService {
   async execute({ id }: IRequest) {
     try {
       const characterExist = await characterRepository.getOne({ id });
-      if (!characterExist) throw new CustomError("Character is exist", 400);
+      if (!characterExist) throw new CustomError("Character is not exist", 400);
 
       const character = await characterRepository.delete({ id });
 
-      await originRepository.delete({ id: characterExist.origin.id });
-      await locationRepository.delete({ id: characterExist.location.id });
+      await originRepository.delete({ id: characterExist.originId });
+      await locationRepository.delete({ id: characterExist.locationId });
 
       return character;
     } catch (err) {
