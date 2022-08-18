@@ -59,7 +59,7 @@ export class CharacterRepositoryInMemory {
   }
 
   async getAll({ id, name, species }: IGetAllCharacter) {
-    const characters = this.characters.find(
+    const characters = this.characters.filter(
       (char) => String(char.userId) === String(id)
     );
 
