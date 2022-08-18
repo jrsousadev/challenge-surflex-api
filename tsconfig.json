@@ -2,7 +2,7 @@
   "compilerOptions": {
     "experimentalDecorators": true,
     "sourceMap": true,
-    "outDir": "public",
+    "outDir": "dist",
     "strict": true,
     "lib": ["esnext"],
     "esModuleInterop": true
