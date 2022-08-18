@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String      @id @default(uuid())
+  name       String      @unique
+  password   String
+  created_at DateTime    @default(now())
+  Character  Character[]
+
+  @@map("users")
+}
+
+model Location {
+  id        String      @id @default(uuid())
+  name      String      @default("unknown")
+  url       String      @default("")
+  Character Character[]
+
+  @@map("locations")
+}
+
+model Origin {
+  id        String      @id @default(uuid())
+  name      String      @default("unknown")
+  url       String      @default("")
+  Character Character[]
+
+  @@map("origins")
+}
+
+model Character {
+  id      Int      @id
+  name    String
+  status  Status
+  species String
+  type    String
+  gender  Gender
+  image   String
+  episode String[]
+  url     String
+  created DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  origin   Origin @relation(fields: [originId], references: [id])
+  originId String
+
+  location   Location @relation(fields: [locationId], references: [id])
+  locationId String
+
+  @@map("characters")
+}
+
+enum Status {
+  Alive
+  Dead
+  unknown
+}
+
+enum Gender {
+  Female
+  Male
+  unknown
+}
