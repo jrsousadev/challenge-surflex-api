@@ -35,7 +35,7 @@ export class LocationRepositoryInMemory {
 
   async getOne({ id }: IGetLocation) {
     const location = this.locations.find((location) => location.id === id);
-    return location;
+    return location ?? null;
   }
 
   async delete({ id }: IDeleteLocation) {

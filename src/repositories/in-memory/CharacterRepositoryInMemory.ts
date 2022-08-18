@@ -73,7 +73,7 @@ export class CharacterRepositoryInMemory {
     const character = this.characters.find(
       (char) => Number(char.id) === Number(id)
     );
-    return character;
+    return character ?? null;
   }
 
   async getAll({ id, name, species }: IGetAllCharacter) {

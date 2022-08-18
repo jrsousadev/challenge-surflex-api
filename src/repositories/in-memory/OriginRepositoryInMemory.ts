@@ -35,7 +35,7 @@ export class OriginRepositoryInMemory {
 
   async getOne({ id }: IGetOrigin) {
     const origin = this.origins.find((origin) => origin.id === id);
-    return origin;
+    return origin ?? null;
   }
 
   async delete({ id }: IDeleteOrigin) {

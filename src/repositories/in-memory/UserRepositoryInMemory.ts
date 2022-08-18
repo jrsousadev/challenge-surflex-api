@@ -37,10 +37,10 @@ export class UserRepositoryInMemory {
   async getOne({ id, name }: IGetUser) {
     if (id) {
       const user = this.users.find((user) => String(user.id) === String(id));
-      return user;
+      return user ?? null;
     }
 
     const user = this.users.find((user) => user.name === name);
-    return user;
+    return user ?? null;
   }
 }
