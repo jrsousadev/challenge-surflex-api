@@ -11,7 +11,7 @@ export class GetCharacterService {
     try {
       const character = await characterRepository.getOne({ id });
 
-      if (!character) throw new CustomError("Character is exist", 400);
+      if (!character) throw new CustomError("Character is not exist", 400);
 
       return character;
     } catch (err) {
