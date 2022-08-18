@@ -5,7 +5,7 @@ import { AuthenticationUserServiceInMemory } from "./in-memory/AuthenticationUse
 let userRepository: UserRepositoryInMemory;
 let authenticationUserServiceInMemory: AuthenticationUserServiceInMemory;
 
-describe("Service Create Character", () => {
+describe("Authentication User", () => {
   beforeEach(() => {
     userRepository = new UserRepositoryInMemory();
     authenticationUserServiceInMemory = new AuthenticationUserServiceInMemory(

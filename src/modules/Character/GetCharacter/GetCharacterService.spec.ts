@@ -10,7 +10,7 @@ let originRepository: OriginRepositoryInMemory;
 let locationRepository: LocationRepositoryInMemory;
 let getCharacterServiceInMemory: GetCharacterServiceInMemory;
 
-describe("Get All Characters", () => {
+describe("Get One Characters", () => {
   beforeEach(() => {
     characterRepository = new CharacterRepositoryInMemory();
     originRepository = new OriginRepositoryInMemory();
