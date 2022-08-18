@@ -62,7 +62,7 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -78,7 +78,7 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -100,7 +100,7 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -112,7 +112,7 @@ export class CharacterRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }

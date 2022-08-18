@@ -20,7 +20,7 @@ export class OriginRepository {
         data,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -32,7 +32,7 @@ export class OriginRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -44,7 +44,7 @@ export class OriginRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }

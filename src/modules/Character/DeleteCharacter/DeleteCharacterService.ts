@@ -17,12 +17,11 @@ export class DeleteCharacterService {
       const characterExist = await this.characterRepository.getOne({ id });
       if (!characterExist) throw new CustomError("Character is not exist", 400);
 
-      const character = await this.characterRepository.delete({ id });
-
+      await this.characterRepository.delete({ id });
       await this.originRepository.delete({ id: characterExist.originId });
       await this.locationRepository.delete({ id: characterExist.locationId });
 
-      return character;
+      return true;
     } catch (err) {
       throw err;
     }

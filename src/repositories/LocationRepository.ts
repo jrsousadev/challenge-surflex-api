@@ -20,7 +20,7 @@ export class LocationRepository {
         data,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -32,7 +32,7 @@ export class LocationRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 
@@ -44,7 +44,7 @@ export class LocationRepository {
         },
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 }
