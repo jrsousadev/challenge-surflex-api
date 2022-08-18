@@ -26,10 +26,11 @@ Este projeto é um sistema que exibe a listagem de personagens da API do "Rick A
 **1-** Clone repository.
 
 **2-** Install dependecies.
-```js
-yarn
-// or
-yarn install
+```sh
+# install dependencies
+> yarn
+# or
+> yarn install
 
 # copy .env file
 > cp .env.example .env
@@ -38,7 +39,7 @@ yarn install
 > yarn dev
 
 # open in
-> http://localhost:3000
+http://localhost:3000/
 ```
 
 
