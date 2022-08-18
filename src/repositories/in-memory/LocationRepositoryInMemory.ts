@@ -19,7 +19,7 @@ interface IDeleteLocation {
   id: string;
 }
 
-export class LocationRepository {
+export class LocationRepositoryInMemory {
   locations: ILocation[] = [];
 
   async create({ name, url }: ICreateLocation) {
@@ -30,6 +30,7 @@ export class LocationRepository {
     };
 
     this.locations.push(locationCreated);
+    return locationCreated;
   }
 
   async getOne({ id }: IGetLocation) {

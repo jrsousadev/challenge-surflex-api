@@ -30,6 +30,7 @@ export class OriginRepositoryInMemory {
     };
 
     this.origins.push(originCreated);
+    return originCreated;
   }
 
   async getOne({ id }: IGetOrigin) {

@@ -45,8 +45,6 @@ export class CreateCharacterService {
         url: data.location.url ?? "",
       });
 
-      console.log(location);
-
       if (characterExist) throw new CustomError("Character is exist", 400);
 
       await characterRepository.create({
