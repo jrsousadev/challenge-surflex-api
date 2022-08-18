@@ -1,18 +1,17 @@
-import { uuid } from "uuidv4";
 import { UserRepositoryInMemory } from "../../../repositories/in-memory/UserRepositoryInMemory";
-import { CreateUserServiceInMemory } from "./in-memory/CreateUserServiceInMemory";
+import { CreateUserService } from "./CreateUserService";
 
 let userRepository: UserRepositoryInMemory;
-let createUserServiceInMemory: CreateUserServiceInMemory;
+let createUserService: CreateUserService;
 
 describe("Service Create Character", () => {
   beforeEach(() => {
     userRepository = new UserRepositoryInMemory();
-    createUserServiceInMemory = new CreateUserServiceInMemory(userRepository);
+    createUserService = new CreateUserService(userRepository);
   });
 
   it("Deve ser capaz de criar um usuário com sucesso!", async () => {
-    const userCreated = await createUserServiceInMemory.execute({
+    const userCreated = await createUserService.execute({
       name: "Teste",
       password: "Teste123",
     });
@@ -27,7 +26,7 @@ describe("Service Create Character", () => {
     });
 
     expect(async () => {
-      await createUserServiceInMemory.execute({
+      await createUserService.execute({
         name: "Teste",
         password: "Teste123",
       });

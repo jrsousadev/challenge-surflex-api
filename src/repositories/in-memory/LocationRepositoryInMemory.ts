@@ -39,8 +39,6 @@ export class LocationRepositoryInMemory {
   }
 
   async delete({ id }: IDeleteLocation) {
-    const locations = this.locations.filter((location) => location.id !== id);
-
-    return locations;
+    this.locations.filter((location) => location.id !== id);
   }
 }

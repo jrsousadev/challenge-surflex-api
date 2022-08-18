@@ -1,3 +1,13 @@
+interface Location {
+  id: string;
+  name: string;
+  url: string;
+}
+interface Origin {
+  id: string;
+  name: string;
+  url: string;
+}
 interface Character {
   id: number;
   name: string;
@@ -5,12 +15,15 @@ interface Character {
   species: string;
   type: string;
   gender: "Female" | "Male" | "unknown";
+  location: Location;
+  origin: Origin;
   originId: string;
   locationId: string;
   image: string;
   episode: string[];
   url: string;
   userId: string;
+  created: Date;
 }
 
 interface ICreateCharacter {
@@ -20,12 +33,15 @@ interface ICreateCharacter {
   species: string;
   type: string;
   gender: "Female" | "Male" | "unknown";
+  location: Location;
+  origin: Origin;
   originId: string;
   locationId: string;
   image: string;
   episode: string[];
   url: string;
   userId: string;
+  created: Date;
 }
 
 interface IGetCharacter {
@@ -49,6 +65,8 @@ export class CharacterRepositoryInMemory {
     const characterCreated = data;
 
     this.characters.push(characterCreated);
+
+    return characterCreated;
   }
 
   async getOne({ id }: IGetCharacter) {
@@ -67,10 +85,6 @@ export class CharacterRepositoryInMemory {
   }
 
   async delete({ id }: IDeleteCharacter) {
-    const characters = this.characters.filter(
-      (char) => Number(char.id) !== Number(id)
-    );
-
-    return characters;
+    this.characters.filter((char) => Number(char.id) !== Number(id));
   }
 }

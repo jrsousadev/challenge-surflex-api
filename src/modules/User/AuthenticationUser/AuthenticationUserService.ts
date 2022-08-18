@@ -2,7 +2,6 @@ import { CustomError } from "../../../shared/errors/CustomError";
 import { UserRepository } from "../../../repositories/UserRepository";
 import { verifyPassword } from "../../../services/password/verifyPassword";
 import { generateToken } from "../../../services/token/generateToken";
-const userRepository = new UserRepository();
 
 interface IRequest {
   name: string;
@@ -10,9 +9,10 @@ interface IRequest {
 }
 
 export class AuthenticationUserService {
+  constructor(private userRepository: UserRepository) {}
   async execute({ name, password }: IRequest) {
     try {
-      const user = await userRepository.getOne({ name });
+      const user = await this.userRepository.getOne({ name });
 
       if (!user) throw new CustomError("Name or password incorret", 400);
 

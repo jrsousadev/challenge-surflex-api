@@ -39,8 +39,6 @@ export class OriginRepositoryInMemory {
   }
 
   async delete({ id }: IDeleteOrigin) {
-    const origins = this.origins.filter((origin) => origin.id !== id);
-
-    return origins;
+    this.origins.filter((origin) => origin.id === id);
   }
 }

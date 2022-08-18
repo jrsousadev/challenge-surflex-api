@@ -38,7 +38,7 @@ export class OriginRepository {
 
   async delete({ id }: IDeleteOrigin) {
     try {
-      return await prismaClient.origin.delete({
+      await prismaClient.origin.delete({
         where: {
           id,
         },

@@ -2,25 +2,25 @@ import { CharacterRepository } from "../../../repositories/CharacterRepository";
 import { LocationRepository } from "../../../repositories/LocationRepository";
 import { OriginRepository } from "../../../repositories/OriginRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
-
-const characterRepository = new CharacterRepository();
-const originRepository = new OriginRepository();
-const locationRepository = new LocationRepository();
-
 interface IRequest {
   id: number;
 }
 
 export class DeleteCharacterService {
+  constructor(
+    private characterRepository: CharacterRepository,
+    private originRepository: OriginRepository,
+    private locationRepository: LocationRepository
+  ) {}
   async execute({ id }: IRequest) {
     try {
-      const characterExist = await characterRepository.getOne({ id });
+      const characterExist = await this.characterRepository.getOne({ id });
       if (!characterExist) throw new CustomError("Character is not exist", 400);
 
-      const character = await characterRepository.delete({ id });
+      const character = await this.characterRepository.delete({ id });
 
-      await originRepository.delete({ id: characterExist.originId });
-      await locationRepository.delete({ id: characterExist.locationId });
+      await this.originRepository.delete({ id: characterExist.originId });
+      await this.locationRepository.delete({ id: characterExist.locationId });
 
       return character;
     } catch (err) {

@@ -106,7 +106,7 @@ export class CharacterRepository {
 
   async delete({ id }: IDeleteCharacter) {
     try {
-      return await prismaClient.character.delete({
+      await prismaClient.character.delete({
         where: {
           id,
         },

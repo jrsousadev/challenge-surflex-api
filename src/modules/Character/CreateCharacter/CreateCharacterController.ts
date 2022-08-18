@@ -1,4 +1,7 @@
 import { Request, Response } from "express";
+import { CharacterRepository } from "../../../repositories/CharacterRepository";
+import { LocationRepository } from "../../../repositories/LocationRepository";
+import { OriginRepository } from "../../../repositories/OriginRepository";
 import { CustomError } from "../../../shared/errors/CustomError";
 import { CreateCharacterService } from "./CreateCharacterService";
 
@@ -20,7 +23,14 @@ export class CreateCharacterController {
     const { id: userId } = request.user;
 
     try {
-      const createCharacterService = new CreateCharacterService();
+      const characterRepository = new CharacterRepository();
+      const originRepository = new OriginRepository();
+      const locationRepository = new LocationRepository();
+      const createCharacterService = new CreateCharacterService(
+        characterRepository,
+        originRepository,
+        locationRepository
+      );
       const character = await createCharacterService.execute({
         id,
         name,

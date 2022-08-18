@@ -38,7 +38,7 @@ export class LocationRepository {
 
   async delete({ id }: IDeleteLocation) {
     try {
-      return await prismaClient.location.delete({
+      await prismaClient.location.delete({
         where: {
           id,
         },

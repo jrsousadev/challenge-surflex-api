@@ -30,6 +30,8 @@ export class UserRepositoryInMemory {
     };
 
     this.users.push(userCreated);
+
+    return userCreated;
   }
 
   async getOne({ id, name }: IGetUser) {

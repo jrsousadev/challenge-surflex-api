@@ -1,16 +1,13 @@
-import { uuid } from "uuidv4";
 import { UserRepositoryInMemory } from "../../../repositories/in-memory/UserRepositoryInMemory";
-import { AuthenticationUserServiceInMemory } from "./in-memory/AuthenticationUserServiceInMemory";
+import { AuthenticationUserService } from "./AuthenticationUserService";
 
 let userRepository: UserRepositoryInMemory;
-let authenticationUserServiceInMemory: AuthenticationUserServiceInMemory;
+let authenticationUserService: AuthenticationUserService;
 
 describe("Authentication User", () => {
   beforeEach(() => {
     userRepository = new UserRepositoryInMemory();
-    authenticationUserServiceInMemory = new AuthenticationUserServiceInMemory(
-      userRepository
-    );
+    authenticationUserService = new AuthenticationUserService(userRepository);
   });
 
   it("Deve ser capaz de autenticar um usuário e retornar o token!", async () => {
@@ -19,7 +16,7 @@ describe("Authentication User", () => {
       password: "Teste123",
     });
 
-    const response = await authenticationUserServiceInMemory.execute({
+    const response = await authenticationUserService.execute({
       name: "Teste",
       password: "Teste123",
     });
@@ -29,7 +26,7 @@ describe("Authentication User", () => {
 
   it("Não deve ser capaz de autenticar um usuário inexistente!", async () => {
     expect(async () => {
-      await authenticationUserServiceInMemory.execute({
+      await authenticationUserService.execute({
         name: "Teste",
         password: "Teste1234",
       });
@@ -47,7 +44,7 @@ describe("Authentication User", () => {
     });
 
     expect(async () => {
-      await authenticationUserServiceInMemory.execute({
+      await authenticationUserService.execute({
         name: "Teste",
         password: "Teste12",
       });

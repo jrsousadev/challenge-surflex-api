@@ -1,32 +1,30 @@
 import { CharacterRepositoryInMemory } from "../../../repositories/in-memory/CharacterRepositoryInMemory";
 import { LocationRepositoryInMemory } from "../../../repositories/in-memory/LocationRepositoryInMemory";
 import { OriginRepositoryInMemory } from "../../../repositories/in-memory/OriginRepositoryInMemory";
-import { CreateCharacterServiceInMemory } from "../CreateCharacter/in-memory/CreateCharacterServiceInMemory";
-import { GetCharacterServiceInMemory } from "./in-memory/GetCharacterServiceInMemory";
+import { CreateCharacterService } from "../CreateCharacter/CreateCharacterService";
+import { GetCharacterService } from "./GetCharacterService";
 
-let createCharacterServiceInMemory: CreateCharacterServiceInMemory;
+let createCharacterService: CreateCharacterService;
 let characterRepository: CharacterRepositoryInMemory;
 let originRepository: OriginRepositoryInMemory;
 let locationRepository: LocationRepositoryInMemory;
-let getCharacterServiceInMemory: GetCharacterServiceInMemory;
+let getCharacterService: GetCharacterService;
 
 describe("Get One Characters", () => {
   beforeEach(() => {
     characterRepository = new CharacterRepositoryInMemory();
     originRepository = new OriginRepositoryInMemory();
     locationRepository = new LocationRepositoryInMemory();
-    createCharacterServiceInMemory = new CreateCharacterServiceInMemory(
+    createCharacterService = new CreateCharacterService(
       characterRepository,
       originRepository,
       locationRepository
     );
-    getCharacterServiceInMemory = new GetCharacterServiceInMemory(
-      characterRepository
-    );
+    getCharacterService = new GetCharacterService(characterRepository);
   });
 
   it("Deve ser capaz de retornar um personagem!", async () => {
-    const charaterOne = await createCharacterServiceInMemory.execute({
+    const charaterOne = await createCharacterService.execute({
       episode: ["episode1", "episode2"],
       gender: "Male",
       id: 1,
@@ -47,7 +45,7 @@ describe("Get One Characters", () => {
       userId: "123",
     });
 
-    const character = await getCharacterServiceInMemory.execute({
+    const character = await getCharacterService.execute({
       id: 1,
     });
 
@@ -55,7 +53,7 @@ describe("Get One Characters", () => {
   });
 
   it("Não deve ser capaz de retornar um personagem não existente!", async () => {
-    const charaterOne = await createCharacterServiceInMemory.execute({
+    const charaterOne = await createCharacterService.execute({
       episode: ["episode1", "episode2"],
       gender: "Male",
       id: 1,
@@ -77,7 +75,7 @@ describe("Get One Characters", () => {
     });
 
     expect(async () => {
-      await getCharacterServiceInMemory.execute({
+      await getCharacterService.execute({
         id: 2,
       });
     }).rejects.toEqual({

@@ -1,6 +1,4 @@
 import { CharacterRepository } from "../../../repositories/CharacterRepository";
-const characterRepository = new CharacterRepository();
-
 interface IRequest {
   id: string;
   name: string;
@@ -8,9 +6,14 @@ interface IRequest {
 }
 
 export class GetAllCharacterService {
+  constructor(private characterRepository: CharacterRepository) {}
   async execute({ id, name, species }: IRequest) {
     try {
-      const character = await characterRepository.getAll({ id, name, species });
+      const character = await this.characterRepository.getAll({
+        id,
+        name,
+        species,
+      });
 
       if (!character) return [];
 

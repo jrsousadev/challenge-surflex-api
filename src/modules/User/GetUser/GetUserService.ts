@@ -1,7 +1,5 @@
-import { cryptedPassword } from "../../../services/password/cryptedPassword";
 import { CustomError } from "../../../shared/errors/CustomError";
 import { UserRepository } from "../../../repositories/UserRepository";
-const userRepository = new UserRepository();
 
 interface IRequest {
   name?: string;
@@ -9,11 +7,12 @@ interface IRequest {
 }
 
 export class GetUserService {
+  constructor(private userRepository: UserRepository) {}
   async execute({ id, name }: IRequest) {
     try {
-      const user = await userRepository.getOne({ id, name });
+      const user = await this.userRepository.getOne({ id, name });
 
-      if (!user) throw new CustomError("User is exist", 400);
+      if (!user) throw new CustomError("User is not exist", 400);
 
       return user;
     } catch (err) {

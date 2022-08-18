@@ -2,11 +2,11 @@ import { uuid } from "uuidv4";
 import { CharacterRepositoryInMemory } from "../../../repositories/in-memory/CharacterRepositoryInMemory";
 import { LocationRepositoryInMemory } from "../../../repositories/in-memory/LocationRepositoryInMemory";
 import { OriginRepositoryInMemory } from "../../../repositories/in-memory/OriginRepositoryInMemory";
-import { CreateCharacterServiceInMemory } from "../CreateCharacter/in-memory/CreateCharacterServiceInMemory";
-import { DeleteCharacterServiceInMemory } from "./in-memory/DeleteCharacterServiceInMemory";
+import { CreateCharacterService } from "../CreateCharacter/CreateCharacterService";
+import { DeleteCharacterService } from "./DeleteCharacterService";
 
-let createCharacterServiceInMemory: CreateCharacterServiceInMemory;
-let deleteCharacterServiceInMemory: DeleteCharacterServiceInMemory;
+let createCharacterService: CreateCharacterService;
+let deleteCharacterService: DeleteCharacterService;
 let characterRepository: CharacterRepositoryInMemory;
 let originRepository: OriginRepositoryInMemory;
 let locationRepository: LocationRepositoryInMemory;
@@ -16,12 +16,12 @@ describe("Service Delete Character", () => {
     characterRepository = new CharacterRepositoryInMemory();
     originRepository = new OriginRepositoryInMemory();
     locationRepository = new LocationRepositoryInMemory();
-    createCharacterServiceInMemory = new CreateCharacterServiceInMemory(
+    createCharacterService = new CreateCharacterService(
       characterRepository,
       originRepository,
       locationRepository
     );
-    deleteCharacterServiceInMemory = new DeleteCharacterServiceInMemory(
+    deleteCharacterService = new DeleteCharacterService(
       characterRepository,
       originRepository,
       locationRepository
@@ -29,7 +29,7 @@ describe("Service Delete Character", () => {
   });
 
   it("Não deve ser capaz de deletar um personagem que não existe!", async () => {
-    await createCharacterServiceInMemory.execute({
+    await createCharacterService.execute({
       episode: ["episode1", "episode2"],
       gender: "Male",
       id: 1,
@@ -51,7 +51,7 @@ describe("Service Delete Character", () => {
     });
 
     expect(async () => {
-      await deleteCharacterServiceInMemory.execute({
+      await deleteCharacterService.execute({
         id: 2,
       });
     }).rejects.toEqual({
@@ -62,7 +62,7 @@ describe("Service Delete Character", () => {
   });
 
   it("Deve ser capaz de deletar o personagem com sucesso", async () => {
-    await createCharacterServiceInMemory.execute({
+    await createCharacterService.execute({
       episode: ["episode1", "episode2"],
       gender: "Male",
       id: 1,
@@ -83,10 +83,10 @@ describe("Service Delete Character", () => {
       userId: uuid(),
     });
 
-    const characters = await deleteCharacterServiceInMemory.execute({
+    const character = await deleteCharacterService.execute({
       id: 1,
     });
 
-    expect(characters).not.toBe(undefined);
+    expect(character).toBe(undefined);
   });
 });
