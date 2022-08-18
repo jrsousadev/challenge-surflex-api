@@ -13,6 +13,13 @@ Este projeto é um sistema que exibe a listagem de personagens da API do "Rick A
 
 ### Regras de negócio:
 
+[x] Criar usuário
+[x] Logar usuário
+[x] Listar personagens 
+[x] Listar personagens por filtros (nome e espécie)
+[x] Criar personagem (Favoritar)
+[x] Deletar personagem (Desfavoritar)
+
 ### Link do repositório Client (Front-end)
 
 🔗 [Front-end](https://github.com/jrsousadev/challenge-surflex-front)
@@ -23,9 +30,7 @@ Este projeto é um sistema que exibe a listagem de personagens da API do "Rick A
 
 ### Iniciando o Projeto
 
-**1-** Clone repository.
-
-**2-** Install dependecies.
+**1-** Clone repository and install dependencies.
 ```sh
 # install dependencies
 > yarn
@@ -47,9 +52,3 @@ http://localhost:3000/
 ```sh
 > yarn prisma migration dev
 ```
-
-### Create events manually
-```sh
-> yarn seed
-```
-
