@@ -31,10 +31,6 @@ export class CreateCharacterService {
 
   async execute(data: IRequest) {
     try {
-      const characterExist = await this.characterRepository.getOne({
-        id: Number(data.id),
-      });
-
       const origin = await this.originRepository.create({
         name: data.origin.name ?? "unknown",
         url: data.origin.url ?? "",
@@ -45,17 +41,19 @@ export class CreateCharacterService {
         url: data.location.url ?? "",
       });
 
-      if (characterExist) throw new CustomError("Character is exist", 400);
+      data.id = Math.round((Math.random() * 3000));
 
-      if (location && origin)
+      if (location && origin) {
         await this.characterRepository.create({
           ...data,
           originId: origin.id,
           locationId: location.id,
         });
-
+      }
+      
       const character = await this.characterRepository.getOne({
         id: Number(data.id),
+        userId: String(data.userId),
       });
 
       return character;

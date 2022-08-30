@@ -17,6 +17,7 @@ interface ICreateCharacter {
 
 interface IGetCharacter {
   id: number;
+  userId?: string;
 }
 
 interface IDeleteCharacter {
@@ -66,7 +67,23 @@ export class CharacterRepository {
     }
   }
 
-  async getOne({ id }: IGetCharacter) {
+  async getOne({ id, userId }: IGetCharacter) {
+    if (userId) {
+      try {
+        return await prismaClient.character.findFirst({
+          where: {
+            id,
+            userId,
+          },
+          include: {
+            origin: true,
+            location: true,
+          },
+        });
+      } catch (err) {
+        throw err;
+      }
+    }
     try {
       return await prismaClient.character.findFirst({
         where: {
